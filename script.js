@@ -1,6 +1,7 @@
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize animations and interactive elements
+    initThemeToggle();
     initNavigation();
     initHeroAnimation();
     initFeatureCards();
@@ -10,38 +11,42 @@ document.addEventListener('DOMContentLoaded', function() {
     initBlockchainBackground();
 });
 
+// Theme Toggle Functionality
+function initThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    
+    // Check for saved theme preference or use default (light)
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-theme');
+    } else {
+        body.classList.add('light-theme');
+    }
+    
+    // Toggle theme on button click
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            // Toggle theme classes on body
+            body.classList.toggle('light-theme');
+            body.classList.toggle('dark-theme');
+            
+            // Save theme preference to localStorage
+            const currentTheme = body.classList.contains('light-theme') ? 'light' : 'dark';
+            localStorage.setItem('theme', currentTheme);
+        });
+    }
+}
+
 // Mobile Navigation
 function initNavigation() {
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
-    const navLinksItems = document.querySelectorAll('.nav-links a');
-    const body = document.body;
     
     if (menuToggle) {
-        // Toggle menu on hamburger click
         menuToggle.addEventListener('click', function() {
             navLinks.classList.toggle('active');
             this.classList.toggle('active');
-            // Prevent body scrolling when menu is open
-            body.classList.toggle('menu-open');
-        });
-        
-        // Close menu when clicking on a nav link
-        navLinksItems.forEach(item => {
-            item.addEventListener('click', function() {
-                navLinks.classList.remove('active');
-                menuToggle.classList.remove('active');
-                body.classList.remove('menu-open');
-            });
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!navLinks.contains(event.target) && !menuToggle.contains(event.target) && navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-                menuToggle.classList.remove('active');
-                body.classList.remove('menu-open');
-            }
         });
     }
     
@@ -59,44 +64,19 @@ function initNavigation() {
 // Hero Section Animation
 function initHeroAnimation() {
     const dashboardAnimation = document.querySelector('.dashboard-animation');
-    if (!dashboardAnimation) return;
     
-    // Create animated crypto dashboard elements with responsive design
-    createDashboardElements(dashboardAnimation);
-    
-    // Add resize event listener to ensure animations scale properly
-    window.addEventListener('resize', debounce(() => {
-        // Remove existing elements and recreate for proper scaling
-        while (dashboardAnimation.firstChild) {
-            dashboardAnimation.removeChild(dashboardAnimation.firstChild);
-        }
+    if (dashboardAnimation) {
+        // Create animated crypto dashboard elements
         createDashboardElements(dashboardAnimation);
-    }, 250));
-}
-
-// Debounce function to limit how often a function can be called
-function debounce(func, wait) {
-    let timeout;
-    return function() {
-        const context = this;
-        const args = arguments;
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(context, args), wait);
-    };
+    }
 }
 
 // Create animated dashboard elements
 function createDashboardElements(container) {
-    // Clear any existing content
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
-    
     // Create SVG for dashboard
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('width', '100%');
     svg.setAttribute('height', '100%');
-    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     svg.style.position = 'absolute';
     svg.style.top = '0';
     svg.style.left = '0';

@@ -907,3 +907,44 @@ footer {
         padding: 20px;
     }
 }
+
+/* ------modified to add spline design as bg -------  */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+.spline-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    z-index: -1;
+    pointer-events: none;
+    clip-path: inset(0 0 10% 0); /* Cuts 10% from bottom */
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* Optional overlay */
+    z-index: 0;
+    pointer-events: none;
+}
+
+header, main, footer {
+    position: relative;
+    z-index: 1;
+    background: transparent;
+}
+/* ------modified to add spline design as bg -------  */

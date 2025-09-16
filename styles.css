@@ -326,7 +326,7 @@ nav {
     overflow: hidden;
 }
 
-/* Video Background Styles */
+/* Video Background Styles - Desktop */
 .video-background {
     position: absolute;
     top: 0;
@@ -335,18 +335,16 @@ nav {
     height: 100%;
     z-index: -2;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero-video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* No zoom on desktop - shows original video */
+    object-position: center;
     z-index: -2;
 }
 
@@ -358,7 +356,7 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(10, 11, 16, 0.6); /* Semi-transparent overlay */
+    background: rgba(10, 11, 16, 0.6);
     z-index: -1;
 }
 
@@ -391,12 +389,13 @@ nav {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Responsive video background */
+/* Responsive video background - Controlled zoom on mobile */
 @media (max-width: 768px) {
     .hero-video {
-        /* On mobile, ensure video covers the full area */
-        min-width: 100%;
-        min-height: 100%;
+        /* Slight zoom on tablets - covers more area but not fully cropped */
+        object-fit: cover;
+        transform: scale(1.1); /* 10% zoom - adjust this value as needed */
+        object-position: center;
     }
     
     .hero-content h1 {
@@ -409,6 +408,13 @@ nav {
 }
 
 @media (max-width: 480px) {
+    .hero-video {
+        /* More zoom on mobile phones for better coverage */
+        object-fit: cover;
+        transform: scale(1.2); /* 20% zoom - adjust this value as needed */
+        object-position: center;
+    }
+    
     .hero-content h1 {
         font-size: 2rem;
     }

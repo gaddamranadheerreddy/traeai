@@ -43,11 +43,22 @@ function initNavigation() {
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     
-    if (menuToggle) {
-        menuToggle.addEventListener('click', function() {
+    console.log('Menu toggle element:', menuToggle);
+    console.log('Nav links element:', navLinks);
+    
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Menu toggle clicked!');
+            
             navLinks.classList.toggle('active');
             this.classList.toggle('active');
+            
+            console.log('Nav links classes:', navLinks.className);
+            console.log('Menu toggle classes:', this.className);
         });
+    } else {
+        console.error('Menu toggle or nav links not found!');
     }
     
     // Sticky Header

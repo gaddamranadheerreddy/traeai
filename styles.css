@@ -63,7 +63,7 @@
 
 .theme-toggle .fa-sun {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
 }
 
 .theme-toggle .fa-moon {
